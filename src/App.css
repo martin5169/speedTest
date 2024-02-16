@@ -1,0 +1,168 @@
+@font-face {
+  font-family: 'Nabla';
+  src: url('/Nabla-Regular-VariableFont_EDPT,EHLT.ttf');
+}
+
+:root {
+  font-family: 'Nabla';
+  max-height: min-content;
+  max-width: fit-content;
+  font-size: 45px;
+  background: rgb(0,0,0);
+  background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(60,56,43,1) 81%, rgba(181,181,181,1) 100%);
+}
+
+.conteiner{
+  display: flex;
+  width: 100%;
+  height: 50%;
+  align-items: center;
+  gap: 150px;
+}
+
+.board {
+  text-align: center;
+}
+
+.board h1 {
+  margin: 1rem;
+  text-shadow: #eee 0 5px 6px;
+}
+
+.board button {
+  padding: 25px 25px;
+  margin: 25px;
+  border: 2px solid #eee;
+  background-color: #464141;
+  font-size: 25px;
+  border-radius: 10px;
+  transition: 0.2s;
+  font-family: 'Franklin Gothic Medium';
+  cursor: pointer;
+  color: #111;
+}
+
+
+.board button:hover {
+  background: #c1b8aa; 
+}
+
+.logo{
+  display: grid;
+
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+ }
+
+.colorChance{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.turn {
+  display: grid;
+  justify-content: space-between;
+  border-radius: 10px;
+  padding: 40px;
+  margin: 20px;
+  background-color: #b4a8a8;
+  font-family: 'Franklin Gothic Medium';
+  border: #ffffff solid 5px;
+}
+
+.turn .square,
+.winner .square {
+  width: 250px;
+  height: 200PX;
+  padding: auto;
+  color:#242424;
+  border-color: transparent;
+}
+
+.square.is-selected {
+  color: #1f1d1d;
+  background: rgb(215, 115, 27);
+  border: 2px solid #eee;
+}
+
+.winner button{
+  color: #ffffff;
+  background: rgb(216, 122, 14);
+  font-family: 'Franklin Gothic Medium';
+}
+
+.winner {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  background-color: rgba(61, 58, 58, 0.7);
+}
+
+.winner .text {
+  background: #111;
+  height: 50%;
+  width: 40%;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  font-size: 25px;
+}
+.counter{
+
+  margin: 50px;
+}
+
+.winner .win {
+  margin: 0 auto;
+  width: fit-content;
+  border: 2px solid #eee;
+  border-radius: 10px;
+  display: flex;
+  gap: 15px;
+}
+
+.square {
+  border: 2px solid #eee;
+  border-radius: 5px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1260px) {
+  .winner .text{
+    background: #111;
+    height: 75%;
+    width: 70%;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    font-size: 25px;
+  }
+  .board button {
+    padding: 10px 20px;
+    margin: 25px;
+    border: 2px solid #eee;
+    background-color: #eee;
+    font-size: 25px;
+    width: fit-content;
+    border-radius: 10px;
+    transition: 0.2s;
+    font-family: 'Honk';
+    cursor: pointer;
+  }
+
+}
