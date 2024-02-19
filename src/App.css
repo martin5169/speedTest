@@ -12,6 +12,12 @@
   background: radial-gradient(circle, rgba(0,0,0,1) 0%, rgba(60,56,43,1) 81%, rgba(181,181,181,1) 100%);
 }
 
+.scoreList{
+  background-color: #b4a8a8;
+  color: #1f1d1d;
+  border: #ffffff solid 5px;
+}
+
 .conteiner{
   display: flex;
   width: 100%;
@@ -60,6 +66,7 @@
   justify-content: center;
   align-items: center;
   padding: 30px;
+  min-width: 250px;
  }
 
 .colorChance{
@@ -74,7 +81,6 @@
   padding: 40px;
   margin: 20px;
   background-color: #b4a8a8;
-
   border: #ffffff solid 5px;
 }
 

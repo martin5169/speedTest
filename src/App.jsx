@@ -5,9 +5,8 @@ import { useSelector, useDispatch } from "react-redux";
 const colors = ["red", "white", "green", "blue", "yellow", "purple"];
 
 const Square = ({ children, color }) => {
-
   return (
-    <div className="square color" style={{ backgroundColor: color}}>
+    <div className="square color" style={{ backgroundColor: color }}>
       {children}
     </div>
   );
@@ -15,7 +14,7 @@ const Square = ({ children, color }) => {
 
 function App() {
   const dispatch = useDispatch();
-  const highestScore = useSelector((state) => state.points);
+  const highestScores = useSelector((state) => state.points);
   const [gameFinished, setGameFinished] = useState(false);
   const [time, setTime] = useState(10);
   const [points, setPoints] = useState(0);
@@ -24,21 +23,20 @@ function App() {
     colors[Math.floor(Math.random() * colors.length)]
   );
 
-
   const handleSelection = () => {
     setStartGame(true);
   };
 
   const handleGameFinish = () => {
-    if (points > highestScore) {
-      localStorage.setItem("highestScore", points.toString());
-      dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
-    }
-    setGameFinished(false)
-    setStartGame(false);
-    setTime(10);
-  };
 
+      localStorage.setItem("highestScores", points.toString());
+      dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
+    
+    setStartGame(false);
+    setPoints(0)
+    setTime(10);
+    setGameFinished(false);
+  };
 
   const generateColor = (selected) => {
     const randomColorIndex = Math.floor(Math.random() * colors.length);
@@ -53,13 +51,16 @@ function App() {
   };
 
   useEffect(() => {
-    const storedHighestScore = localStorage.getItem("highestScore");
+    const storedHighestScore = localStorage.getItem("highestScores");
     if (storedHighestScore !== null) {
-      dispatch({ type: "SET_HIGHEST_SCORE", payload: parseInt(storedHighestScore) });
+      dispatch({
+        type: "SET_HIGHEST_SCORE",
+        payload: parseInt(storedHighestScore),
+      });
     }
   }, []);
-
-  useEffect(() => {
+   
+   useEffect(() => {
     if (startGame) {
       const timer = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
@@ -68,10 +69,9 @@ function App() {
       setTimeout(() => {
         clearInterval(timer);
         setGameFinished(true)
-        handleGameFinish()
       }, 10000);
     }
-  }, [startGame]);
+  }, [startGame]);  
 
   return (
     <main className="board">
@@ -80,16 +80,22 @@ function App() {
         <aside className="counter">
           <div className="logo">
             <h2>{time} seconds</h2>
-         
+
             <h2>Points: {points}</h2>
-            <h2>Highest Score: {highestScore}</h2> 
+            <div className="scoreList">
+              {" "}
+              <h3>Highest Score</h3>
+              <ul>
+                {highestScores.map((score, index) => (
+                  <li key={index}>{score}</li>
+                ))}
+              </ul>
+            </div>
           </div>
         </aside>
         <section className="turn">
           <div className="colorChance">
-            <Square color={color}>
-              {color.toUpperCase()}
-            </Square>
+            <Square color={color}>{color.toUpperCase()}</Square>
           </div>
           <div>
             {colors.map((c, index) => (

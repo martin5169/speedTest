@@ -1,14 +1,16 @@
 const initialState = {
-    points: 0,
+    points: []
   };
   
   const reducer = (state = initialState, action) => {
     switch (action.type) {
       case "SET_HIGHEST_SCORE":
-        return { ...state, points: action.payload };
+        const updatedPoints = [...state.points, action.payload].sort((a, b) => b - a).slice(0, 3);
+        return { ...state, points: updatedPoints };
       default:
         return state;
     }
   };
+  
   
   export default reducer;
