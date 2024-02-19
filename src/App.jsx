@@ -66,7 +66,7 @@ function App() {
           <div className="logo">
             <h2>Remaining time</h2>
             <h2>{time} seconds</h2>
-            <h3>Points: {points}</h3>
+            <h2>Points: {points}</h2>
           </div>
         </aside>
         <section className="turn">
