@@ -1,10 +1,11 @@
 @font-face {
-  font-family: 'Nabla';
-  src: url('/Nabla-Regular-VariableFont_EDPT,EHLT.ttf');
+  font-family: 'Sakana';
+  src: url('/Sakana.ttf');
 }
 
 :root {
-  font-family: 'Nabla';
+  color: #eee;
+  font-family: 'Sakana';
   max-height: min-content;
   max-width: fit-content;
   background: rgb(0,0,0);
@@ -44,7 +45,7 @@
   font-size: 25px;
   border-radius: 10px;
   transition: 0.2s;
-  font-family: 'Franklin Gothic Medium';
+  font-family: 'Sakana';
   cursor: pointer;
   color: #111;
 }
@@ -73,7 +74,7 @@
   padding: 40px;
   margin: 20px;
   background-color: #b4a8a8;
-  font-family: 'Franklin Gothic Medium';
+
   border: #ffffff solid 5px;
 }
 
@@ -86,7 +87,7 @@
   border-color: transparent;
 }
 
-.square.is-selected {
+.square.color {
   color: #1f1d1d;
   border: 5px solid #eeeeee;
   font-size: 35px;
@@ -95,7 +96,7 @@
 .winner button{
   color: #ffffff;
   background: rgb(216, 122, 14);
-  font-family: 'Franklin Gothic Medium';
+
 }
 .winner {
   position: fixed;
@@ -166,7 +167,7 @@
     width: fit-content;
     border-radius: 10px;
     transition: 0.2s;
-    font-family: 'Franklin Gothic Medium';
+
     cursor: pointer;
   }
 

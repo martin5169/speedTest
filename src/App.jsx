@@ -4,11 +4,10 @@ import { useSelector, useDispatch } from "react-redux";
 
 const colors = ["red", "white", "green", "blue", "yellow", "purple"];
 
-const Square = ({ children, isSelected, color }) => {
-  const className = `square ${isSelected ? "is-selected" : ""}`;
+const Square = ({ children, color }) => {
 
   return (
-    <div className={className} style={{ backgroundColor: color }}>
+    <div className="square color" style={{ backgroundColor: color}}>
       {children}
     </div>
   );
@@ -35,7 +34,7 @@ function App() {
       localStorage.setItem("highestScore", points.toString());
       dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
     }
-    setGameFinished(false);
+    setGameFinished(false)
     setStartGame(false);
     setTime(10);
   };
@@ -68,6 +67,7 @@ function App() {
 
       setTimeout(() => {
         clearInterval(timer);
+        setGameFinished(true)
         handleGameFinish()
       }, 10000);
     }
@@ -79,15 +79,15 @@ function App() {
       <div className="conteiner">
         <aside className="counter">
           <div className="logo">
-            <h2>Remaining time</h2>
             <h2>{time} seconds</h2>
+         
             <h2>Points: {points}</h2>
             <h2>Highest Score: {highestScore}</h2> 
           </div>
         </aside>
         <section className="turn">
           <div className="colorChance">
-            <Square isSelected color={color}>
+            <Square color={color}>
               {color.toUpperCase()}
             </Square>
           </div>
@@ -118,7 +118,7 @@ function App() {
         {gameFinished && (
           <section className="winner">
             <div className="text">
-              <h3>Tu puntuacion es: {points}</h3>
+              <h2>Tu puntuacion es: {points}</h2>
               <footer>
                 <button onClick={handleGameFinish}>SALIR</button>
               </footer>
