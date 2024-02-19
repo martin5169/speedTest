@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import { useSelector, useDispatch } from "react-redux";
 
 const colors = ["red", "white", "green", "blue", "yellow", "purple"];
 
@@ -14,6 +15,8 @@ const Square = ({ children, isSelected, color }) => {
 };
 
 function App() {
+  const dispatch = useDispatch();
+  const highestScore = useSelector((state) => state.points);
   const [gameFinished, setGameFinished] = useState(false);
   const [time, setTime] = useState(10);
   const [points, setPoints] = useState(0);
@@ -22,16 +25,21 @@ function App() {
     colors[Math.floor(Math.random() * colors.length)]
   );
 
-  const reset = () => {
-    setTime(10);
-    setPoints(0);
-    setStartGame(false);
-    setGameFinished(false);
-  };
 
   const handleSelection = () => {
     setStartGame(true);
   };
+
+  const handleGameFinish = () => {
+    if (points > highestScore) {
+      localStorage.setItem("highestScore", points.toString());
+      dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
+    }
+    setGameFinished(false);
+    setStartGame(false);
+    setTime(10);
+  };
+
 
   const generateColor = (selected) => {
     const randomColorIndex = Math.floor(Math.random() * colors.length);
@@ -46,6 +54,13 @@ function App() {
   };
 
   useEffect(() => {
+    const storedHighestScore = localStorage.getItem("highestScore");
+    if (storedHighestScore !== null) {
+      dispatch({ type: "SET_HIGHEST_SCORE", payload: parseInt(storedHighestScore) });
+    }
+  }, []);
+
+  useEffect(() => {
     if (startGame) {
       const timer = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
@@ -53,7 +68,7 @@ function App() {
 
       setTimeout(() => {
         clearInterval(timer);
-        //setGameFinished(true);
+        handleGameFinish()
       }, 10000);
     }
   }, [startGame]);
@@ -67,6 +82,7 @@ function App() {
             <h2>Remaining time</h2>
             <h2>{time} seconds</h2>
             <h2>Points: {points}</h2>
+            <h2>Highest Score: {highestScore}</h2> 
           </div>
         </aside>
         <section className="turn">
@@ -104,7 +120,7 @@ function App() {
             <div className="text">
               <h3>Tu puntuacion es: {points}</h3>
               <footer>
-                <button onClick={reset}>SALIR</button>
+                <button onClick={handleGameFinish}>SALIR</button>
               </footer>
             </div>
           </section>
