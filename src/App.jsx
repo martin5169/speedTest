@@ -27,17 +27,6 @@ function App() {
     setStartGame(true);
   };
 
-  const handleGameFinish = () => {
-
-      localStorage.setItem("highestScores", points.toString());
-      dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
-    
-    setStartGame(false);
-    setPoints(0)
-    setTime(10);
-    setGameFinished(false);
-  };
-
   const generateColor = (selected) => {
     const randomColorIndex = Math.floor(Math.random() * colors.length);
     const randomColor = colors[randomColorIndex];
@@ -51,6 +40,19 @@ function App() {
   };
 
   useEffect(() => {
+    if (startGame) {
+      const timer = setInterval(() => {
+        setTime((prevTime) => prevTime - 1);
+      }, 1000);
+  
+      setTimeout(() => {
+        clearInterval(timer);
+        setGameFinished(true)
+      }, 10000);
+    }
+  }, [startGame]);
+  
+  useEffect(() => {
     const storedHighestScore = localStorage.getItem("highestScores");
     if (storedHighestScore !== null) {
       dispatch({
@@ -59,19 +61,15 @@ function App() {
       });
     }
   }, []);
-   
-   useEffect(() => {
-    if (startGame) {
-      const timer = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-
-      setTimeout(() => {
-        clearInterval(timer);
-        setGameFinished(true)
-      }, 10000);
-    }
-  }, [startGame]);  
+  
+  const handleGameFinish = () => {
+    dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
+    localStorage.setItem("highestScores", points);
+    setStartGame(false);
+    setPoints(0);
+    setTime(10);
+    setGameFinished(false);
+  };
 
   return (
     <main className="board">
@@ -80,16 +78,14 @@ function App() {
         <aside className="counter">
           <div className="logo">
             <h2>{time} seconds</h2>
-
             <h2>Points: {points}</h2>
             <div className="scoreList">
-              {" "}
-              <h3>Highest Score</h3>
-              <ul>
+              <h3>Top Scores</h3>
+              <div>
                 {highestScores.map((score, index) => (
-                  <li key={index}>{score}</li>
+                  <p key={index}>{index+1}° place - {score} points </p>
                 ))}
-              </ul>
+              </div>
             </div>
           </div>
         </aside>
@@ -124,9 +120,10 @@ function App() {
         {gameFinished && (
           <section className="winner">
             <div className="text">
-              <h2>Tu puntuacion es: {points}</h2>
+              <h2>FINISH</h2>
+              <p>POINTS: {points}</p>
               <footer>
-                <button onClick={handleGameFinish}>SALIR</button>
+                <button onClick={handleGameFinish}>CLOSE</button>
               </footer>
             </div>
           </section>

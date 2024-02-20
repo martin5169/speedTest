@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'Sakana';
-  src: url('/Sakana.ttf');
+  src: url('/fonts/Sakana.ttf');
 }
 
 :root {
@@ -16,14 +16,14 @@
   background-color: #b4a8a8;
   color: #1f1d1d;
   border: #ffffff solid 5px;
+  padding: 25px;
 }
 
 .conteiner{
   display: flex;
   width: 100%;
-  height: 50%;
   align-items: center;
-  gap: 150px;
+  gap: 100px;
 }
 
 .conteiner h2{
@@ -31,7 +31,6 @@
 }
 
 .board {
-  
   text-align: center;
   width: 100%;
   height: fit-content;
@@ -40,7 +39,7 @@
 .board h1 {
   font-size: 60px;
   margin: 0.5rem;
-  text-shadow: #eee 0 5px 6px;
+  text-shadow: #4fa056 0 10px 10px;
 }
 
 .board button {
@@ -63,12 +62,14 @@
 
 .logo{
   display: grid;
+  grid-area: auto;
   justify-content: center;
   align-items: center;
   padding: 30px;
-  min-width: 250px;
+  min-width: 300px;
  }
 
+ 
 .colorChance{
   display: flex;
   justify-content: center;
@@ -101,7 +102,7 @@
 
 .winner button{
   color: #ffffff;
-  background: rgb(216, 122, 14);
+  background: rgb(40, 134, 31);
 
 }
 .winner {
@@ -115,7 +116,6 @@
   background-color: rgba(61, 58, 58, 0.7);
 }
 
-
 .winner .text {
   background: #111;
   height: 50%;
@@ -126,7 +126,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 40px;
+  gap: 10px;
   font-size: 25px;
 }
 .counter{
@@ -163,6 +163,7 @@
     align-items: center;
     gap: 40px;
     font-size: 25px;
+    padding: 20px;
   }
   .board button {
     padding: 10px 20px;
@@ -173,7 +174,7 @@
     width: fit-content;
     border-radius: 10px;
     transition: 0.2s;
-
+    color: #111;
     cursor: pointer;
   }
 
