@@ -14,7 +14,12 @@ const Square = ({ children, color }) => {
 
 function App() {
   const dispatch = useDispatch();
-  const highestScores = useSelector((state) => state.points);
+
+  const [highestScores, setHighestScores] = useState(() => {
+    const storedHighestScore = JSON.parse(localStorage.getItem("points"));
+    return storedHighestScore || [];
+  });
+
   const [gameFinished, setGameFinished] = useState(false);
   const [time, setTime] = useState(10);
   const [points, setPoints] = useState(0);
@@ -32,11 +37,35 @@ function App() {
     const randomColor = colors[randomColorIndex];
 
     if (color === selected) {
-      setPoints(points + 1);
+      setPoints((prevPoints) => prevPoints + 1);
       setColor(randomColor);
     } else {
-      setPoints(points - 1);
+      setPoints((prevPoints) => prevPoints - 1);
     }
+  };
+
+  const handleGameFinish = () => {
+    updateHighestScores();
+    saveGameResults();
+    resetGame();
+  };
+
+  const updateHighestScores = () => {
+    const updatedScores = [...highestScores, points].sort((a, b) => b - a);
+    const topThreeScores = updatedScores.slice(0, 3);
+    setHighestScores(topThreeScores);
+    dispatch({ type: "SET_HIGHEST_SCORE", payload: topThreeScores });
+  };
+
+  const saveGameResults = () => {
+    localStorage.setItem("points", JSON.stringify(highestScores));
+  };
+
+  const resetGame = () => {
+    setStartGame(false);
+    setPoints(0);
+    setTime(10);
+    setGameFinished(false);
   };
 
   useEffect(() => {
@@ -44,32 +73,23 @@ function App() {
       const timer = setInterval(() => {
         setTime((prevTime) => prevTime - 1);
       }, 1000);
-  
       setTimeout(() => {
         clearInterval(timer);
-        setGameFinished(true)
+        setGameFinished(true);
       }, 10000);
     }
   }, [startGame]);
-  
+
   useEffect(() => {
-    const storedHighestScore = localStorage.getItem("highestScores");
+    const storedHighestScore = JSON.parse(localStorage.getItem("points"));
     if (storedHighestScore !== null) {
-      dispatch({
-        type: "SET_HIGHEST_SCORE",
-        payload: parseInt(storedHighestScore),
-      });
+      setHighestScores(storedHighestScore);
     }
   }, []);
-  
-  const handleGameFinish = () => {
-    dispatch({ type: "SET_HIGHEST_SCORE", payload: points });
-    localStorage.setItem("highestScores", points);
-    setStartGame(false);
-    setPoints(0);
-    setTime(10);
-    setGameFinished(false);
-  };
+
+  useEffect(() => {
+    localStorage.setItem("points", JSON.stringify(highestScores));
+  }, [highestScores]);
 
   return (
     <main className="board">
@@ -83,7 +103,9 @@ function App() {
               <h3>Top Scores</h3>
               <div>
                 {highestScores.map((score, index) => (
-                  <p key={index}>{index+1}° place - {score} points </p>
+                  <li key={index}>
+                    {index + 1}° place - {score} points{" "}
+                  </li>
                 ))}
               </div>
             </div>

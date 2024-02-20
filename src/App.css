@@ -42,6 +42,12 @@
   text-shadow: #4fa056 0 10px 10px;
 }
 
+.scoreList h3{
+  font-size: 35px;
+  margin: 0.5rem;
+  text-shadow: #4fa056 0 6px 6px;
+}
+
 .board button {
   padding: 25px 25px;
   margin: 25px;
